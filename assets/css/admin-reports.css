@@ -1,0 +1,23 @@
+.glint-reports-wrap {
+    margin-top: 20px;
+}
+.glint-reports-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.glint-reports-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+}
+.glint-reports-main {
+    flex-grow: 1;
+    min-width: 400px;
+}
+.glint-chart-box .inside {
+    padding: 20px;
+}
+#glint-reports-spinner {
+    float: none;
+    margin: 0 10px;
+}
