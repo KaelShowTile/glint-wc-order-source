@@ -47,6 +47,7 @@ jQuery(document).ready(function($) {
     function renderReport(data) {
         var labels = data.labels;
         var values = data.values;
+        var amounts = data.amounts;
         var tbody = $('#glint-reports-tbody');
         tbody.empty();
 
@@ -59,11 +60,13 @@ jQuery(document).ready(function($) {
         }
 
         var total = 0;
+        var totalAmount= 0;
         for (var i = 0; i < labels.length; i++) {
             total += parseInt(values[i], 10);
-            tbody.append('<tr><td>' + labels[i] + '</td><td>' + values[i] + '</td></tr>');
+            totalAmount += parseFloat(amounts[i]);
+            tbody.append('<tr><td>' + labels[i] + '</td><td>' + values[i] + '</td><td>$' + parseFloat(amounts[i]).toFixed(2) + '</td></tr>');
         }
-        tbody.append('<tr><td><strong>Total</strong></td><td><strong>' + total + '</strong></td></tr>');
+        tbody.append('<tr><td><strong>Total</strong></td><td><strong>' + total + '</strong></td><td><strong>$' + totalAmount.toFixed(2) + '</strong></td></tr>');
 
         var colors = generateColors(labels.length);
         

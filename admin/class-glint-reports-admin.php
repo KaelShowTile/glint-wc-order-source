@@ -76,10 +76,12 @@ class Glint_WC_Reports_Admin
 
         $order_ids = wc_get_orders($order_args);
         $data = array();
+        $amounts = array();
 
         if ($report_type === 'source') {
             foreach ($order_ids as $order_id) {
                 $order = wc_get_order($order_id);
+                $order_total = (float) $order->get_total();
 
                 $source_type = $order->get_meta('source_type');
                 if (empty($source_type)) {
@@ -114,13 +116,16 @@ class Glint_WC_Reports_Admin
 
                 if (!isset($data[$key])) {
                     $data[$key] = 0;
+                    $amounts[$key] = 0.0;
                 }
                 $data[$key]++;
+                $amounts[$key] += $order_total;
             }
         }
         elseif ($report_type === 'location') {
             foreach ($order_ids as $order_id) {
                 $order = wc_get_order($order_id);
+                $order_total = (float) $order->get_total();
 
                 $state = $order->get_shipping_state();
                 if (empty($state)) {
@@ -141,18 +146,26 @@ class Glint_WC_Reports_Admin
 
                 if (!isset($data[$key])) {
                     $data[$key] = 0;
+                    $amounts[$key] = 0.0;
                 }
                 $data[$key]++;
+                $amounts[$key] += $order_total;
             }
         }
 
         arsort($data); // Sort by values descending
         $sorted_labels = array_keys($data);
         $sorted_values = array_values($data);
+        
+        $sorted_amounts = array();
+        foreach ($sorted_labels as $label) {
+            $sorted_amounts[] = $amounts[$label];
+        }
 
         wp_send_json_success(array(
             'labels' => $sorted_labels,
             'values' => $sorted_values,
+            'amounts' => $sorted_amounts,
         ));
     }
 }

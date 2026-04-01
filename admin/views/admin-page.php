@@ -66,11 +66,12 @@ $statuses = wc_get_order_statuses();
                             <tr>
                                 <th>Item</th>
                                 <th>Count</th>
+                                <th>Total Amount</th>
                             </tr>
                         </thead>
                         <tbody id="glint-reports-tbody">
                             <tr>
-                                <td colspan="2">Generate a report to see data.</td>
+                                <td colspan="3">Generate a report to see data.</td>
                             </tr>
                         </tbody>
                     </table>
